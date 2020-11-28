@@ -1,14 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AndroidLayouts">
+    <shared>
+      <config />
+    </shared>
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="a327927f-9bf8-4cb6-b670-e0472c1db672" name="Default Changelist" comment="" />
+    <list default="true" id="a327927f-9bf8-4cb6-b670-e0472c1db672" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="Nexus_5X_API_29" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
   <component name="ProjectId" id="1kusvblgdiOlM8Bg3Wk6k52EutY" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
@@ -17,9 +29,12 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
   </component>
   <component name="RunManager">
-    <configuration name="Unnamed" type="AndroidRunConfigurationType" factoryName="Android App" nameIsGenerated="true">
+    <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App">
       <module name="StepAppT06_StarterApp" />
       <option name="DEPLOY" value="true" />
       <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
@@ -89,17 +104,27 @@
       <screen x="0" y="23" width="1792" height="1043" />
     </state>
     <state x="496" y="209" key="#Inspections/0.23.1792.1043@0.23.1792.1043" timestamp="1606564618525" />
-    <state x="600" y="183" key="#Unnamed" timestamp="1606562401358">
-      <screen x="0" y="23" width="1792" height="1042" />
+    <state x="440" y="177" key="#Project_Structure" timestamp="1606565002666">
+      <screen x="0" y="23" width="1792" height="1019" />
     </state>
+    <state x="440" y="177" key="#Project_Structure/0.23.1792.1019@0.23.1792.1019" timestamp="1606565002666" />
+    <state x="600" y="179" key="#Unnamed" timestamp="1606565068738">
+      <screen x="0" y="23" width="1792" height="1019" />
+    </state>
+    <state x="600" y="179" key="#Unnamed/0.23.1792.1019@0.23.1792.1019" timestamp="1606565068738" />
     <state x="600" y="183" key="#Unnamed/0.23.1792.1042@0.23.1792.1042" timestamp="1606562401358" />
-    <state x="360" y="206" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1606562077884">
-      <screen x="0" y="23" width="1792" height="1042" />
+    <state x="529" y="173" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1606565453927">
+      <screen x="0" y="23" width="1792" height="1019" />
     </state>
+    <state x="529" y="173" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1792.1019@0.23.1792.1019" timestamp="1606565453927" />
     <state x="360" y="206" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1792.1042@0.23.1792.1042" timestamp="1606562077884" />
     <state x="566" y="376" key="com.intellij.ide.util.TipDialog" timestamp="1606562044689">
       <screen x="0" y="23" width="1792" height="1042" />
     </state>
     <state x="566" y="376" key="com.intellij.ide.util.TipDialog/0.23.1792.1042@0.23.1792.1042" timestamp="1606562044689" />
+    <state x="505" y="239" width="670" height="676" key="search.everywhere.popup" timestamp="1606565966530">
+      <screen x="0" y="23" width="1792" height="1019" />
+    </state>
+    <state x="505" y="239" width="670" height="676" key="search.everywhere.popup/0.23.1792.1019@0.23.1792.1019" timestamp="1606565966530" />
   </component>
 </project>
