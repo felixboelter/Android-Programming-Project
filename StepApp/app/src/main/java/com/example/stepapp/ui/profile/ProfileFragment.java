@@ -16,6 +16,18 @@ import com.example.stepapp.R;
 import java.util.Map;
 
 public class ProfileFragment extends Fragment {
+
+
+    public String getWeightText() {
+        return weightText.getText().toString();
+    }
+
+
+    public String getHeightText() {
+        return heightText.getText().toString();
+    }
+
+
     public EditText weightText;
     public EditText heightText;
     public SeekBar weightSeekBar;

@@ -52,8 +52,7 @@ public class HomeFragment extends Fragment {
     private Sensor mSensorStepDetector;
 
     // Completed steps
-    static int stepsCompleted = 0;
-
+    public static int stepsCompleted = 0;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
