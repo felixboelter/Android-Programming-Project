@@ -29,9 +29,8 @@
     <string name="hourly_report">Hourly report</string>
     <string name="daily_report">Daily report</string>
     <string name="img_folder">app_images</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-
+    <string name="mapbox_access_token">pk.eyJ1IjoibXdjYnVybiIsImEiOiJja2kxb2RxejgwNG94MnJudGFubnI0bmswIn0.XXaZeTB4HF53af1zTo2UdA</string>
 </resources>
 
 
