@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,7 +43,6 @@ public class HomeFragment extends Fragment {
     // Text view and Progress Bar variables
     public TextView stepsCountTextView;
     public ProgressBar stepsCountProgressBar;
-
     // ACC sensors.
     private Sensor mSensorACC;
     private SensorManager mSensorManager;
@@ -66,11 +66,11 @@ public class HomeFragment extends Fragment {
         stepsCompleted = StepAppOpenHelper.loadSingleRecord(getContext(), fDate);
 
 
+
         // Text view & ProgressBar
         stepsCountTextView = (TextView) root.findViewById(R.id.stepsCount);
         stepsCountProgressBar = (ProgressBar) root.findViewById(R.id.progressBar);
         stepsCountProgressBar.setMax(100);
-
         //Set the Views with the number of stored steps
         stepsCountTextView.setText(String.valueOf(stepsCompleted));
         stepsCountProgressBar.setProgress(stepsCompleted);

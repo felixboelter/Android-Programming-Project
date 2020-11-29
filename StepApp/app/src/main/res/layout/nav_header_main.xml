@@ -13,21 +13,23 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="84dp"
-        android:layout_height="84dp"
+        android:layout_width="53dp"
+        android:layout_height="94dp"
         android:contentDescription="@string/nav_header_desc"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        app:srcCompat="@drawable/app_icon" />
+        app:srcCompat="@mipmap/ic_big" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clickable="false"
+        android:fontFamily="@font/nunito_semibold"
+        android:paddingLeft="5dip"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
+        android:paddingRight="5dip"
         android:text="@string/nav_header_title"
-        android:layout_gravity="center"
-        android:foregroundGravity="center"
-        android:textSize="18dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="18sp" />
 
 </LinearLayout>
 

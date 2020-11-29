@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,17 +26,17 @@ public class ProfileFragment extends Fragment {
 
 
     public String getWeightText() {
-        return weightText.getText().toString();
+        return weightText.toString();
     }
 
 
     public String getHeightText() {
-        return heightText.getText().toString();
+        return heightText.toString();
     }
 
 
-    public EditText weightText;
-    public EditText heightText;
+    public TextView weightText;
+    public TextView heightText;
     public SeekBar weightSeekBar;
     public SeekBar heightSeekBar;
     public List<String> profile;
@@ -66,7 +67,7 @@ public class ProfileFragment extends Fragment {
 
 
 
-    private void setListener(SeekBar seekBar, final EditText textSetter, final SQLiteDatabase db, final String metric, final int index, final String key){
+    private void setListener(SeekBar seekBar, final TextView textSetter, final SQLiteDatabase db, final String metric, final int index, final String key){
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             private int mProgressAtStartTracking;
             private int progressChanged = 0;
@@ -94,7 +95,7 @@ public class ProfileFragment extends Fragment {
             }
         });
     }
-    private void createProfile(EditText weight_text, EditText height_text, SeekBar weight_bar, SeekBar height_bar){
+    private void createProfile(TextView weight_text, TextView height_text, SeekBar weight_bar, SeekBar height_bar){
 //        StepAppOpenHelper.deleteProfile(getContext());
         profile = StepAppOpenHelper.loadProfile(getContext());
         System.out.println(profile);

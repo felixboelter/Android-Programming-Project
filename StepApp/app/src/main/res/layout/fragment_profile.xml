@@ -32,7 +32,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/weightPlainText" />
 
-    <EditText
+    <TextView
         android:id="@+id/weightPlainText"
         android:layout_width="88dp"
         android:layout_height="23dp"
@@ -42,13 +42,12 @@
         android:background="@null"
         android:ems="10"
         android:fontFamily="@font/nunito_semibold"
-        android:inputType="textPersonName"
         android:text="Weight"
         app:layout_constraintEnd_toStartOf="@+id/WeightID"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
+    <TextView
         android:id="@+id/WeightID"
         android:layout_width="88dp"
         android:layout_height="23dp"
@@ -58,13 +57,13 @@
         android:background="@null"
         android:ems="10"
         android:fontFamily="@font/nunito_semibold"
-        android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/weightBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/weightPlainText"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
-    <EditText
+    <TextView
         android:id="@+id/HeightID"
         android:layout_width="88dp"
         android:layout_height="23dp"
@@ -74,12 +73,11 @@
         android:background="@null"
         android:ems="10"
         android:fontFamily="@font/nunito_semibold"
-        android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/heightPlainText"
         app:layout_constraintTop_toBottomOf="@+id/weightBar" />
 
-    <EditText
+    <TextView
         android:id="@+id/heightPlainText"
         android:layout_width="69dp"
         android:layout_height="21dp"
@@ -88,19 +86,24 @@
         android:background="@null"
         android:ems="10"
         android:fontFamily="@font/nunito_semibold"
-        android:inputType="textPersonName"
         android:text="Height"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/weightBar" />
 
-    <EditText
+    <TextView
         android:id="@+id/profileID"
         android:layout_width="94dp"
         android:layout_height="51dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="17dp"
+        android:layout_marginEnd="297dp"
+        android:layout_marginBottom="143dp"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:fontFamily="@font/nunito_semibold"
         android:text="@string/menu_profile"
-        tools:layout_editor_absoluteX="20dp"
-        tools:layout_editor_absoluteY="17dp" />
+        app:layout_constraintBottom_toTopOf="@+id/weightBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
