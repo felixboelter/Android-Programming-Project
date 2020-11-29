@@ -55,16 +55,15 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        switch(oldVersion) {
-            case 1:
-                db.execSQL(CREATE_TABLE_SQL);
-            case 2:
-                db.execSQL(SQL_PROFILE);
-        }
-//        if (newVersion > oldVersion){
-//            db.execSQL(CREATE_TABLE_SQL);
-//            db.execSQL(SQL_PROFILE);
+//        switch(oldVersion) {
+//            case 1:
+//                db.execSQL(CREATE_TABLE_SQL);
+//            case 2:
+//                db.execSQL(SQL_PROFILE);
 //        }
+        if (newVersion > oldVersion){
+            db.execSQL(SQL_PROFILE);
+        }
     }
 
 
