@@ -84,7 +84,7 @@ public class HomeFragment extends Fragment {
         mSensorStepDetector = mSensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
 
 
-        StepAppOpenHelper databaseOpenHelper =   new StepAppOpenHelper(this.getContext());;
+        StepAppOpenHelper databaseOpenHelper = new StepAppOpenHelper(this.getContext());;
         SQLiteDatabase database = databaseOpenHelper.getWritableDatabase();
 
         //Instantiate the StepCounterListener
@@ -178,7 +178,7 @@ class StepCounterListener<stepsCompleted> implements SensorEventListener {
     ProgressBar stepsCountProgressBar;
 
     //
-    SQLiteDatabase database;
+    private SQLiteDatabase database;
     public String timestamp;
     public String day;
     public String hour;
