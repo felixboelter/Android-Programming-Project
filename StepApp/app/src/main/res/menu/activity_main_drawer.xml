@@ -17,6 +17,11 @@
             android:id="@+id/nav_day"
             android:icon="@drawable/ic_weekly_chart"
             android:title="@string/menu_day" />
+        <item
+            android:id="@+id/nav_map"
+            android:icon="@drawable/ic_explore_24px"
+            android:title="@string/menu_map" />
+
 
         <item
             android:id="@+id/nav_profile"
