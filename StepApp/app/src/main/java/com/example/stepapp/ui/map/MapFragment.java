@@ -6,6 +6,7 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -191,6 +192,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, MapboxM
         } else {
             permissionsManager = new PermissionsManager(this);
             permissionsManager.requestLocationPermissions(requireActivity());
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            mapView.onDestroy();
+            ft.detach(this).attach(this).commit();
         }
     }
 
