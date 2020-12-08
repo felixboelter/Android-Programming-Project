@@ -56,10 +56,10 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:layout_width="26dp"
-                android:layout_height="26dp"
+                android:layout_width="46dp"
+                android:layout_height="46dp"
                 android:layout_gravity="center"
-                android:background="@drawable/ic_menu_step"
+                android:background="@mipmap/ic_launcher_foreground"
                 android:backgroundTint="@color/colorAccent" />
 
             <TextView
