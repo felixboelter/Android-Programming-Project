@@ -13,9 +13,9 @@
     <string name="menu_day">Day</string>
     <string name="menu_map">Map</string>
     <string name="menu_profile">Profile</string>
-    <string name="goal">Goal: 100</string>
+    <string name="goal">Goal: 1000</string>
     <string name="_0">0</string>
-    <string name="steps">Steps</string>
+    <string name="Calories">Calories</string>
     <string name="start">Start</string>
     <string name="toggle_stop">stop</string>
     <string name="toggle_start">start</string>

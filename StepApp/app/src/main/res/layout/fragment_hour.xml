@@ -79,7 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:foregroundGravity="center"
-            android:text="@string/steps"
+            android:text="@string/Calories"
             android:textSize="18sp" />
 
     </LinearLayout>

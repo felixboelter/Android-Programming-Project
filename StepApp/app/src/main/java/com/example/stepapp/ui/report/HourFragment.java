@@ -23,6 +23,7 @@ import com.anychart.enums.TooltipPositionMode;
 import com.example.stepapp.R;
 import com.example.stepapp.StepAppOpenHelper;
 
+import java.sql.SQLOutput;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,7 +33,7 @@ import java.util.TreeMap;
 
 public class HourFragment  extends Fragment {
 
-    public int todaySteps = 0;
+    public double todayCalories = 0;
     TextView numStepsTextView;
     AnyChartView anyChartView;
 
@@ -40,6 +41,10 @@ public class HourFragment  extends Fragment {
     String current_time = new SimpleDateFormat("yyyy-MM-dd").format(cDate);
 
     public Map<Integer, Integer> stepsByHour = null;
+
+
+
+
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -60,8 +65,8 @@ public class HourFragment  extends Fragment {
 
         // Add the number of steps in text view
         numStepsTextView = root.findViewById(R.id.numStepsTextView);
-        todaySteps = StepAppOpenHelper.loadSingleRecord(getContext(), current_time);
-        numStepsTextView.setText(String.valueOf(todaySteps));
+        todayCalories = StepAppOpenHelper.loadSingleRecord(getContext(), current_time);
+        numStepsTextView.setText(String.valueOf(todayCalories));
 
         return root;
     }
@@ -77,6 +82,7 @@ public class HourFragment  extends Fragment {
         // TODO 1: Get the map with hours and number of steps for today
         //  from the database and initialize it to variable stepsByHour
         stepsByHour = StepAppOpenHelper.loadStepsByHour(getContext(),current_time);
+
 
         // TODO 2: Creating a new map that contains hours of the day from 0 to 24 and
         //  number of steps during each hour set to 0
@@ -108,8 +114,8 @@ public class HourFragment  extends Fragment {
 
         //Modifying properties of tooltip
         column.tooltip()
-                .titleFormat("At hour: {%X}")
-                .format("{%Value}{groupsSeparator: } Steps")
+                .titleFormat("At hour {%X}")
+                .format("{%Value}{groupsSeparator: } Calories")
                 .anchor(Anchor.RIGHT_TOP);
 
         // TODO 5: Modify column chart tooltip properties
@@ -125,7 +131,7 @@ public class HourFragment  extends Fragment {
 
 
         // TODO 6: Modify the UI of the cartesian
-        cartesian.yAxis(0).title("Number of steps");
+        cartesian.yAxis(0).title("Burnt Calories");
         cartesian.xAxis(0).title("Hour");
         cartesian.background().fill("#00000000");
         cartesian.animation(true);

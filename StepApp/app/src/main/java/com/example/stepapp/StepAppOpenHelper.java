@@ -20,6 +20,8 @@ import java.util.TreeMap;
 public class StepAppOpenHelper extends SQLiteOpenHelper {
 
 
+
+
     private static final int DATABASE_VERSION = 4;
     private static final String DATABASE_NAME = "stepapp";
 
@@ -94,6 +96,8 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
         database.close();
         return profile;
     }
+
+
     public static void deleteProfile(Context context){
         StepAppOpenHelper databaseHelper = new StepAppOpenHelper(context);
         SQLiteDatabase database = databaseHelper.getWritableDatabase();
@@ -161,6 +165,13 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
         StepAppOpenHelper databaseHelper = new StepAppOpenHelper(context);
         SQLiteDatabase database = databaseHelper.getReadableDatabase();
 
+        List<String> profile = StepAppOpenHelper.loadProfile(context);
+        Double weight = Double.parseDouble(profile.get(0).replaceAll("[^0-9]", ""));
+        Double height = Double.parseDouble(profile.get(1).replaceAll("[^0-9]", ""));
+        final double calorieConstant = 0.003154;
+
+
+
         String where = StepAppOpenHelper.KEY_DAY + " = ?";
         String [] whereArgs = { date };
 
@@ -180,6 +191,40 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
         return numSteps;
     }
 
+
+
+    public static Double loadCalories(Context context, String date){
+        List<String> steps = new LinkedList<String>();
+        // Get the readable database
+        StepAppOpenHelper databaseHelper = new StepAppOpenHelper(context);
+        SQLiteDatabase database = databaseHelper.getReadableDatabase();
+
+        List<String> profile = StepAppOpenHelper.loadProfile(context);
+        Double weight = Double.parseDouble(profile.get(0).replaceAll("[^0-9]", ""));
+        Double height = Double.parseDouble(profile.get(1).replaceAll("[^0-9]", ""));
+        final double calorieConstant = 0.003154;
+
+
+
+        String where = StepAppOpenHelper.KEY_DAY + " = ?";
+        String [] whereArgs = { date };
+
+        Cursor cursor = database.query(StepAppOpenHelper.TABLE_NAME, null, where, whereArgs, null,
+                null, null );
+
+        // iterate over returned elements
+        cursor.moveToFirst();
+        for (int index=0; index < cursor.getCount(); index++){
+            steps.add(cursor.getString(0));
+            cursor.moveToNext();
+        }
+        database.close();
+
+        Double numSteps = (double) steps.size();
+
+        return numSteps * weight* height* calorieConstant;
+    }
+
     /**
      * Utility function to get the number of steps by hour for current date
      *
@@ -192,11 +237,16 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
         // 1. Define a map to store the hour and number of steps as key-value pairs
         Map<Integer, Integer>  map = new HashMap<> ();
 
-        // 2. Get the readable database
+
         StepAppOpenHelper databaseHelper = new StepAppOpenHelper(context);
         SQLiteDatabase database = databaseHelper.getReadableDatabase();
+        List<String> profile = StepAppOpenHelper.loadProfile(context);
 
-        // 3. Define the query to get the data
+        Double weight = Double.parseDouble(profile.get(0).replaceAll("[^0-9]", ""));
+        Double height = Double.parseDouble(profile.get(1).replaceAll("[^0-9]", ""));
+        final double calorieConstant = 0.003154;
+
+
         Cursor cursor = database.rawQuery("SELECT hour, COUNT(*)  FROM num_steps " +
                 "WHERE day = ? GROUP BY hour ORDER BY  hour ASC ", new String [] {date});
 
@@ -204,10 +254,10 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
         cursor.moveToFirst();
         for (int index=0; index < cursor.getCount(); index++){
             Integer tmpKey = Integer.parseInt(cursor.getString(0));
-            Integer tmpValue = Integer.parseInt(cursor.getString(1));
+            Double tmpValue = Double.parseDouble(cursor.getString(1));
 
             //2. Put the data from the database into the map
-            map.put(tmpKey, tmpValue);
+            map.put(tmpKey, (int) (tmpValue * weight * height * calorieConstant));
 
 
             cursor.moveToNext();
@@ -235,6 +285,11 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
         // 2. Get the readable database
         StepAppOpenHelper databaseHelper = new StepAppOpenHelper(context);
         SQLiteDatabase database = databaseHelper.getReadableDatabase();
+        List<String> profile = StepAppOpenHelper.loadProfile(context);
+
+        Double weight = Double.parseDouble(profile.get(0).replaceAll("[^0-9]", ""));
+        Double height = Double.parseDouble(profile.get(1).replaceAll("[^0-9]", ""));
+        final double calorieConstant = 0.003154;
 
         // 3. Define the query to get the data
         Cursor cursor = database.rawQuery("SELECT day, COUNT(*)  FROM num_steps " +
@@ -247,7 +302,7 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
             Integer tmpValue = Integer.parseInt(cursor.getString(1));
 
             // Put the data from the database into the map
-            map.put(tmpKey, tmpValue);
+            map.put(tmpKey,(int) (tmpValue * weight * height * calorieConstant));
             cursor.moveToNext();
         }
 
