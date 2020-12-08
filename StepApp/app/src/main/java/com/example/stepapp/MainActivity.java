@@ -13,6 +13,9 @@ import com.example.stepapp.ui.profile.ProfileFragment;
 import com.example.stepapp.ui.report.DayFragment;
 import com.example.stepapp.ui.report.HourFragment;
 import com.google.android.material.navigation.NavigationView;
+import com.mapbox.android.core.permissions.PermissionsManager;
+
+import com.mapbox.mapboxsdk.maps.Style;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -26,11 +29,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout drawer;
     private NavigationView navigationView;
-
     private AppBarConfiguration mAppBarConfiguration;
     private static final int REQUEST_ACTIVITY_RECOGNITION_PERMISSION = 45;
 
@@ -59,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
 
         setupDrawerContent(navigationView);
-
         // Ask for activity recognition permission
         if (runningQOrLater) {
             getActivity();
@@ -166,11 +169,8 @@ public class MainActivity extends AppCompatActivity {
         } else {
             return;        }
     }
-
-
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
             case REQUEST_ACTIVITY_RECOGNITION_PERMISSION:
                 // If request is cancelled, the result arrays are empty.
@@ -186,4 +186,7 @@ public class MainActivity extends AppCompatActivity {
                 return;
         }
     }
+
+
+
 }
