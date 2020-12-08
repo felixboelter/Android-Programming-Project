@@ -1,6 +1,7 @@
 package com.example.stepapp.ui.map;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.graphics.Color;
@@ -29,49 +30,55 @@ import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.maps.Style;
 
 import java.util.List;
-
-public class MapFragment extends Fragment implements  OnMapReadyCallback, PermissionsListener {
+public class MapFragment extends Fragment implements   PermissionsListener {
     private PermissionsManager permissionsManager;
     private MapboxMap mapboxMap;
     private MapView mapView;
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
         if (container != null) {
             container.removeAllViews();
         }
-        Mapbox.getInstance(getContext(), getString(R.string.mapbox_access_token));
+        Mapbox.getInstance(requireContext(), getString(R.string.mapbox_access_token));
         View root = inflater.inflate(R.layout.fragment_map, container, false);
         mapView = root.findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
-        mapView.getMapAsync(this);
-        return root;
-    }
-    @Override
-    public void onMapReady(@NonNull final MapboxMap mapboxMap) {
-        MapFragment.this.mapboxMap = mapboxMap;
-        mapboxMap.setStyle(Style.LIGHT, new Style.OnStyleLoaded() {
+        mapView.getMapAsync(new OnMapReadyCallback(){
+            @Override
+            public void onMapReady(@NonNull final MapboxMap mapboxMap) {
+                MapFragment.this.mapboxMap = mapboxMap;
+                mapboxMap.setStyle(Style.LIGHT, new Style.OnStyleLoaded() {
                     @Override
                     public void onStyleLoaded(@NonNull Style style) {
                         enableLocationComponent(style);
                     }
                 });
+            }
+        });
+        return root;
     }
+
     @SuppressWarnings( {"MissingPermission"})
     private void enableLocationComponent(@NonNull Style loadedMapStyle) {
         if (PermissionsManager.areLocationPermissionsGranted(getContext())) {
-            LocationComponent locationComponent = mapboxMap.getLocationComponent();
-            LocationComponentOptions customLocationComponentOptions = LocationComponentOptions.builder(getContext())
+            LocationComponentOptions customLocationComponentOptions =
+                    LocationComponentOptions.builder(requireContext())
                     .pulseEnabled(true)
                     .build();
+            LocationComponent locationComponent = mapboxMap.getLocationComponent();
             locationComponent.activateLocationComponent(
-                    LocationComponentActivationOptions.builder(getContext(), loadedMapStyle).useDefaultLocationEngine(true).locationComponentOptions(customLocationComponentOptions).build());
+                    LocationComponentActivationOptions.builder(requireContext(),
+                            loadedMapStyle)
+                            .locationComponentOptions(customLocationComponentOptions)
+                            .build());
             locationComponent.setLocationComponentEnabled(true);
+            LocationEngine locationEngine = LocationEngineProvider.getBestLocationEngine(getContext());
+            locationComponent.setLocationEngine(locationEngine);
             locationComponent.setCameraMode(CameraMode.TRACKING);
             locationComponent.setRenderMode(RenderMode.COMPASS);
         } else {
             permissionsManager = new PermissionsManager(this);
-            permissionsManager.requestLocationPermissions(getActivity());
+            permissionsManager.requestLocationPermissions(requireActivity());
         }
     }
 
@@ -84,7 +91,7 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Permis
 
     @Override
     public void onExplanationNeeded(List<String> permissionsToExplain) {
-        Toast.makeText(getContext(),R.string.user_location_permission_explanation, Toast.LENGTH_LONG).show();
+        Toast.makeText(requireContext(),R.string.user_location_permission_explanation, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -97,7 +104,7 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Permis
                 }
             });
         } else {
-            Toast.makeText(getContext(), R.string.user_location_permission_not_granted, Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext(), R.string.user_location_permission_not_granted, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -133,8 +140,8 @@ public class MapFragment extends Fragment implements  OnMapReadyCallback, Permis
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onDestroyView(){
+        super.onDestroyView();
         mapView.onDestroy();
     }
 
