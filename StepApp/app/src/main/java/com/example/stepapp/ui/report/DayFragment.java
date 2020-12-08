@@ -65,8 +65,8 @@ public class DayFragment extends Fragment {
         column.stroke("1EB980");
         //Modifying properties of tooltip
         column.tooltip()
-                .titleFormat("At hour: {%X}")
-                .format("{%Value}{groupsSeparator: } Steps")
+                .titleFormat("On {%X}")
+                .format("{%Value}{groupsSeparator: } Calories")
                 .anchor(Anchor.RIGHT_TOP);
         column.tooltip()
                 .position(Position.RIGHT_TOP)
@@ -76,7 +76,7 @@ public class DayFragment extends Fragment {
         cartesian.tooltip().positionMode(TooltipPositionMode.POINT);
         cartesian.interactivity().hoverMode(HoverMode.BY_X);
         cartesian.yScale().minimum(0);
-        cartesian.yAxis(0).title("Number of steps");
+        cartesian.yAxis(0).title("Calories burnt");
         cartesian.xAxis(0).title("Day");
         cartesian.background().fill("#00000000");
         cartesian.animation(true);
