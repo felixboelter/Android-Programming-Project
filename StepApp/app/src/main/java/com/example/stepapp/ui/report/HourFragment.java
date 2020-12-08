@@ -33,7 +33,7 @@ import java.util.TreeMap;
 
 public class HourFragment  extends Fragment {
 
-    public int todaySteps = 0;
+    public double todayCalories = 0;
     TextView numStepsTextView;
     AnyChartView anyChartView;
 
@@ -65,8 +65,8 @@ public class HourFragment  extends Fragment {
 
         // Add the number of steps in text view
         numStepsTextView = root.findViewById(R.id.numStepsTextView);
-        todaySteps = StepAppOpenHelper.loadSingleRecord(getContext(), current_time);
-        numStepsTextView.setText(String.valueOf(todaySteps));
+        todayCalories = StepAppOpenHelper.loadSingleRecord(getContext(), current_time);
+        numStepsTextView.setText(String.valueOf(todayCalories));
 
         return root;
     }

@@ -28,7 +28,7 @@
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/stepsCount"
+            android:id="@+id/caloriesBurnt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -45,7 +45,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:text="@string/steps"
+            android:text="@string/Calories"
             android:textAlignment="center"
             android:textSize="20sp" />
     </LinearLayout>

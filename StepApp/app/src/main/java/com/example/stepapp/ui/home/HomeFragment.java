@@ -41,8 +41,8 @@ public class HomeFragment extends Fragment {
     MaterialButtonToggleGroup materialButtonToggleGroup;
 
     // Text view and Progress Bar variables
-    public TextView stepsCountTextView;
-    public ProgressBar stepsCountProgressBar;
+    public TextView caloriesBurntTextView;
+    public ProgressBar caloriesBurntProgressBar;
     // ACC sensors.
     private Sensor mSensorACC;
     private SensorManager mSensorManager;
@@ -53,6 +53,8 @@ public class HomeFragment extends Fragment {
 
     // Completed steps
     public static int stepsCompleted = 0;
+
+    public static double caloriesBurnt = 0;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -65,16 +67,17 @@ public class HomeFragment extends Fragment {
         String fDate = new SimpleDateFormat("yyyy-MM-dd").format(cDate);
         stepsCompleted = StepAppOpenHelper.loadSingleRecord(getContext(), fDate);
 
+        caloriesBurnt = StepAppOpenHelper.loadCalories(getContext(), fDate);
+
 
 
         // Text view & ProgressBar
-        stepsCountTextView = (TextView) root.findViewById(R.id.stepsCount);
-        stepsCountProgressBar = (ProgressBar) root.findViewById(R.id.progressBar);
-        stepsCountProgressBar.setMax(100);
+        caloriesBurntTextView =  root.findViewById(R.id.caloriesBurnt);
+        caloriesBurntProgressBar =  root.findViewById(R.id.progressBar);
+        caloriesBurntProgressBar.setMax(1000);
         //Set the Views with the number of stored steps
-        stepsCountTextView.setText(String.valueOf(stepsCompleted));
-        stepsCountProgressBar.setProgress(stepsCompleted);
-
+        caloriesBurntTextView.setText(String.valueOf((int) caloriesBurnt));
+        caloriesBurntProgressBar.setProgress((int) caloriesBurnt);
 
         //  Get an instance of the sensor manager.
         mSensorManager = (SensorManager) this.getActivity().getSystemService(Context.SENSOR_SERVICE);
@@ -88,7 +91,7 @@ public class HomeFragment extends Fragment {
         SQLiteDatabase database = databaseOpenHelper.getWritableDatabase();
 
         //Instantiate the StepCounterListener
-        listener = new StepCounterListener(database, stepsCountTextView, stepsCountProgressBar);
+        listener = new StepCounterListener(database, caloriesBurntTextView, caloriesBurntProgressBar);
 
 
 

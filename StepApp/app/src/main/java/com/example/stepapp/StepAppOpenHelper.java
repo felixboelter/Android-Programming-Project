@@ -165,6 +165,13 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
         StepAppOpenHelper databaseHelper = new StepAppOpenHelper(context);
         SQLiteDatabase database = databaseHelper.getReadableDatabase();
 
+        List<String> profile = StepAppOpenHelper.loadProfile(context);
+        Double weight = Double.parseDouble(profile.get(0).replaceAll("[^0-9]", ""));
+        Double height = Double.parseDouble(profile.get(1).replaceAll("[^0-9]", ""));
+        final double calorieConstant = 0.003154;
+
+
+
         String where = StepAppOpenHelper.KEY_DAY + " = ?";
         String [] whereArgs = { date };
 
@@ -182,6 +189,40 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
         Integer numSteps = steps.size();
         Log.d("STORED STEPS TODAY: ", String.valueOf(numSteps));
         return numSteps;
+    }
+
+
+
+    public static Double loadCalories(Context context, String date){
+        List<String> steps = new LinkedList<String>();
+        // Get the readable database
+        StepAppOpenHelper databaseHelper = new StepAppOpenHelper(context);
+        SQLiteDatabase database = databaseHelper.getReadableDatabase();
+
+        List<String> profile = StepAppOpenHelper.loadProfile(context);
+        Double weight = Double.parseDouble(profile.get(0).replaceAll("[^0-9]", ""));
+        Double height = Double.parseDouble(profile.get(1).replaceAll("[^0-9]", ""));
+        final double calorieConstant = 0.003154;
+
+
+
+        String where = StepAppOpenHelper.KEY_DAY + " = ?";
+        String [] whereArgs = { date };
+
+        Cursor cursor = database.query(StepAppOpenHelper.TABLE_NAME, null, where, whereArgs, null,
+                null, null );
+
+        // iterate over returned elements
+        cursor.moveToFirst();
+        for (int index=0; index < cursor.getCount(); index++){
+            steps.add(cursor.getString(0));
+            cursor.moveToNext();
+        }
+        database.close();
+
+        Double numSteps = (double) steps.size();
+
+        return numSteps * weight* height* calorieConstant;
     }
 
     /**
