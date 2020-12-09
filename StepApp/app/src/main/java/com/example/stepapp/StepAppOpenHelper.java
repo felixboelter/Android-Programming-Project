@@ -196,13 +196,13 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
     public static Double loadCalories(Context context, String date){
         List<String> steps = new LinkedList<String>();
         // Get the readable database
+        final double calorieConstant = 0.003154;
         StepAppOpenHelper databaseHelper = new StepAppOpenHelper(context);
         SQLiteDatabase database = databaseHelper.getReadableDatabase();
-
         List<String> profile = StepAppOpenHelper.loadProfile(context);
         Double weight = Double.parseDouble(profile.get(0).replaceAll("[^0-9]", ""));
         Double height = Double.parseDouble(profile.get(1).replaceAll("[^0-9]", ""));
-        final double calorieConstant = 0.003154;
+
 
 
 

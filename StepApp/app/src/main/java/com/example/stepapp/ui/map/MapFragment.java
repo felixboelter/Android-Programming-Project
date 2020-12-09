@@ -1,10 +1,10 @@
 package com.example.stepapp.ui.map;
 
 import android.graphics.BitmapFactory;
+import android.graphics.RenderNode;
 import android.os.Bundle;
 import java.util.List;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -15,6 +15,7 @@ import android.widget.Toast;
 // classes needed to initialize map
 import com.example.stepapp.R;
 import com.mapbox.mapboxsdk.Mapbox;
+import com.mapbox.mapboxsdk.location.modes.RenderMode;
 import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.Style;
@@ -74,6 +75,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, MapboxM
         Mapbox.getInstance(requireContext(), getString(R.string.mapbox_access_token));
         View root = inflater.inflate(R.layout.fragment_map, container, false);
         button = root.findViewById(R.id.startNavigation);
+        button.setVisibility(View.INVISIBLE);
         mapView = root.findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
@@ -94,7 +96,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, MapboxM
     @Override
     public void onMapReady(@NonNull final MapboxMap mapboxMap) {
         this.mapboxMap = mapboxMap;
-        mapboxMap.setStyle(getString(R.string.navigation_guidance_day), new Style.OnStyleLoaded() {
+        mapboxMap.setStyle(Style.DARK, new Style.OnStyleLoaded() {
             @Override
             public void onStyleLoaded(@NonNull Style style) {
                 enableLocationComponent(style);
@@ -136,8 +138,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, MapboxM
         }
 
         getRoute(originPoint, destinationPoint);
+        button.setVisibility(View.VISIBLE);
         button.setEnabled(true);
-        button.setBackgroundResource(R.color.md_grey_500);
         return true;
     }
 
@@ -182,18 +184,16 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, MapboxM
     private void enableLocationComponent(@NonNull Style loadedMapStyle) {
         // Check if permissions are enabled and if not request
         if (PermissionsManager.areLocationPermissionsGranted(requireContext())) {
-            // Activate the MapboxMap LocationComponent to show user location
-            // Adding in LocationComponentOptions is also an optional parameter
+
             locationComponent = mapboxMap.getLocationComponent();
             locationComponent.activateLocationComponent(requireContext(), loadedMapStyle);
             locationComponent.setLocationComponentEnabled(true);
-            // Set the component's camera mode
             locationComponent.setCameraMode(CameraMode.TRACKING);
+            locationComponent.setRenderMode(RenderMode.COMPASS);
         } else {
             permissionsManager = new PermissionsManager(this);
             permissionsManager.requestLocationPermissions(requireActivity());
             FragmentTransaction ft = getFragmentManager().beginTransaction();
-            mapView.onDestroy();
             ft.detach(this).attach(this).commit();
         }
     }

@@ -34,7 +34,6 @@
     <string name="mapbox_access_token">pk.eyJ1IjoibXdjYnVybiIsImEiOiJja2kxb2RxejgwNG94MnJudGFubnI0bmswIn0.XXaZeTB4HF53af1zTo2UdA</string>
     <string name="user_location_permission_explanation">Burn would like to use your location.</string>
     <string name="user_location_permission_not_granted">:(</string>
-    <string name="new_location">New lat: %1$s New longitude: %2$s</string>
     <string name="startNavigation">Start Navigating</string>
 </resources>
 
