@@ -6,178 +6,88 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <SeekBar
+        android:id="@+id/heightBar"
+        android:layout_width="287dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="104dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="20dp"
+        android:max="250"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/HeightID" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="15dp"
-            android:layout_weight="3"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start|center"
-                android:layout_margin="3dp"
-                android:layout_weight="1"
-                android:gravity="start|center"
-                android:padding="2dp"
-                android:text="@string/gender_text"
-                android:textColor="@color/colorWhite"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/prof_gender_tv_id"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start|center"
-                android:layout_margin="3dp"
-                android:layout_weight="2"
-                android:gravity="start|center"
-                android:padding="2dp"
-                android:textColor="@color/colorWhite"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="15dp"
-            android:layout_weight="3"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start|center"
-                android:layout_margin="3dp"
-                android:layout_weight="1"
-                android:gravity="start|center"
-                android:padding="2dp"
-                android:text="@string/age_text"
-                android:textColor="@color/colorWhite"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/prof_age_tv_id"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start|center"
-                android:layout_margin="3dp"
-                android:layout_weight="2"
-                android:gravity="start|center"
-                android:padding="2dp"
-                android:textColor="@color/colorWhite"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="15dp"
-            android:layout_weight="3"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start|center"
-                android:layout_margin="3dp"
-                android:layout_weight="1"
-                android:gravity="start|center"
-                android:padding="2dp"
-                android:text="@string/weight_text"
-                android:textColor="@color/colorWhite"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/prof_weight_tv_id"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start|center"
-                android:layout_margin="3dp"
-                android:layout_weight="2"
-                android:gravity="start|center"
-                android:padding="2dp"
-                android:textColor="@color/colorWhite"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="15dp"
-            android:layout_weight="3"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start|center"
-                android:layout_margin="3dp"
-                android:layout_weight="1"
-                android:gravity="start|center"
-                android:padding="2dp"
-                android:text="@string/height_text"
-                android:textColor="@color/colorWhite"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/prof_height_tv_id"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start|center"
-                android:layout_margin="3dp"
-                android:layout_weight="2"
-                android:gravity="start|center"
-                android:padding="2dp"
-                android:textColor="@color/colorWhite"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/set_info_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/white_bg"
-        android:padding="15dp"
-        android:text="@string/set_info"
-        android:textColor="@color/colorGray"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <SeekBar
+        android:id="@+id/weightBar"
+        android:layout_width="287dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="104dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="20dp"
+        android:clickable="false"
+        android:max="200"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.54"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/weightPlainText" />
+
+    <TextView
+        android:id="@+id/weightPlainText"
+        android:layout_width="88dp"
+        android:layout_height="23dp"
+        android:layout_marginStart="115dp"
+        android:layout_marginTop="180dp"
+        android:layout_marginEnd="88dp"
+        android:background="@null"
+        android:ems="10"
+        android:fontFamily="@font/nunito_semibold"
+        android:text="Weight"
+        app:layout_constraintEnd_toStartOf="@+id/WeightID"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/WeightID"
+        android:layout_width="88dp"
+        android:layout_height="23dp"
+        android:layout_marginTop="173dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="15dp"
+        android:background="@null"
+        android:ems="10"
+        android:fontFamily="@font/nunito_semibold"
+        app:layout_constraintBottom_toTopOf="@+id/weightBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/weightPlainText"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.9"/>
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/HeightID"
+        android:layout_width="88dp"
+        android:layout_height="23dp"
+        android:layout_marginStart="107dp"
+        android:layout_marginTop="49dp"
+        android:layout_marginEnd="32dp"
+        android:background="@null"
+        android:ems="10"
+        android:fontFamily="@font/nunito_semibold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/heightPlainText"
+        app:layout_constraintTop_toBottomOf="@+id/weightBar" />
+
+    <TextView
+        android:id="@+id/heightPlainText"
+        android:layout_width="69dp"
+        android:layout_height="21dp"
+        android:layout_marginStart="115dp"
+        android:layout_marginTop="51dp"
+        android:background="@null"
+        android:ems="10"
+        android:fontFamily="@font/nunito_semibold"
+        android:text="Height"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/weightBar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

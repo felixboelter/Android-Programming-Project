@@ -1,19 +1,10 @@
 package com.example.stepapp;
 
 import android.Manifest;
-import android.app.Dialog;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.Menu;
-import android.view.View;
-import android.view.Window;
-import android.widget.Button;
-import android.widget.NumberPicker;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.stepapp.ui.home.HomeFragment;
@@ -28,7 +19,6 @@ import com.mapbox.mapboxsdk.maps.Style;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
@@ -40,19 +30,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import java.util.List;
-import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
-    String SETTING_DB_NAME = "SETTING_DB";
-    private SQLiteDatabase settingDB;
-    private StepAppSettingHelper stepAppSettingHelper;
-    boolean settingIsEmpty = false;
-
-    String gender = "female";
-    int age;
-    int weight;
-    int height;
-
 
     private DrawerLayout drawer;
     private NavigationView navigationView;
@@ -87,102 +66,6 @@ public class MainActivity extends AppCompatActivity {
         // Ask for activity recognition permission
         if (runningQOrLater) {
             getActivity();
-        }
-
-        stepAppSettingHelper = new StepAppSettingHelper(this, SETTING_DB_NAME);
-        settingDB = stepAppSettingHelper.getReadableDatabase();
-        Cursor settingCursor = stepAppSettingHelper.getTheTableContent(settingDB);
-
-        if (!settingCursor.moveToFirst()){
-            settingIsEmpty = true;
-        }else {
-            settingIsEmpty = false;
-        }
-        settingCursor.close();
-        settingDB.close();
-
-        if (settingIsEmpty){
-            Log.i("SETTING", "Cursor is empty");
-            final Dialog dialog = new Dialog(this);
-            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            dialog.setCancelable(false);
-            dialog.setContentView(R.layout.setting_picker_layout);
-            Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(ContextCompat.getDrawable(
-                    this,R.drawable.gray_bg));
-
-            Button cancelButton = (Button) dialog.findViewById(R.id.dialog_cancel_button);
-            Button setButton = (Button) dialog.findViewById(R.id.dialog_set_button);
-            cancelButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    gender = "female";
-                    dialog.dismiss();
-                }
-            });
-            final NumberPicker agePicker = (NumberPicker) dialog.findViewById(R.id.age_picker);
-            agePicker.setMinValue(0);
-            agePicker.setMaxValue(100);
-            agePicker.setValue(25);
-
-            final NumberPicker weightPicker = (NumberPicker) dialog.findViewById(R.id.weight_picker);
-            weightPicker.setMinValue(0);
-            weightPicker.setMaxValue(200);
-            weightPicker.setValue(70);
-
-            final NumberPicker heightPicker = (NumberPicker) dialog.findViewById(R.id.height_picker);
-            heightPicker.setMinValue(0);
-            heightPicker.setMaxValue(250);
-            heightPicker.setValue(175);
-
-            final TextView maleTV = (TextView)dialog.findViewById(R.id.male_tv_id);
-            final TextView femaleTV = (TextView)dialog.findViewById(R.id.female_tv_id);
-            final TextView othersTV = (TextView)dialog.findViewById(R.id.others_tv_id);
-            femaleTV.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    femaleTV.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.line_gray_bg));
-                    maleTV.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.colorWhite));
-                    othersTV.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.colorWhite));
-                    gender = "female";
-                }
-            });
-
-            maleTV.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    maleTV.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.line_gray_bg));
-                    femaleTV.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.colorWhite));
-                    othersTV.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.colorWhite));
-                    gender = "male";
-                }
-            });
-
-            othersTV.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    othersTV.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.line_gray_bg));
-                    femaleTV.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.colorWhite));
-                    maleTV.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.colorWhite));
-                    gender = "others";
-                }
-            });
-
-            setButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    age = agePicker.getValue();
-                    weight = weightPicker.getValue();
-                    height = heightPicker.getValue();
-
-                    settingDB = stepAppSettingHelper.getWritableDatabase();
-                    stepAppSettingHelper.insertRow(settingDB,1, age, weight,
-                            height, gender);
-                    settingDB.close();
-                    settingIsEmpty = false;
-                    dialog.dismiss();
-                }
-            });
-            dialog.show();
         }
 
     }
