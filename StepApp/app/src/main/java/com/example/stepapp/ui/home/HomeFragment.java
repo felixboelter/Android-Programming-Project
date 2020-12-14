@@ -73,9 +73,9 @@ public class HomeFragment extends Fragment {
         // Get the number of steps stored in the current date
         Date cDate = new Date();
         String fDate = new SimpleDateFormat("yyyy-MM-dd").format(cDate);
-        stepsCompleted = StepAppOpenHelper.loadSingleRecord(getContext(), fDate);
+        //stepsCompleted = StepAppOpenHelper.loadSingleRecord(getContext(), fDate);
 
-        //caloriesBurnt = StepAppOpenHelper.loadCalories(getContext(), fDate);
+        stepsCompleted = StepAppOpenHelper.getStepsByDate(getContext(), fDate);
 
         // an instance of profile info settingHelperFB
         StepAppSettingHelper stepAppSettingHelper = new StepAppSettingHelper(getContext(), SETTING_DB_NAME);

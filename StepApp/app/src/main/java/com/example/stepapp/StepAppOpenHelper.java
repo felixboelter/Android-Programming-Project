@@ -313,6 +313,31 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
         // 6. Return the map with hours and number of steps
         return map;
     }
+
+    public static int getStepsByDate(Context context, String date){
+        List<String> steps = new LinkedList<String>();
+        StepAppOpenHelper databaseHelper = new StepAppOpenHelper(context);
+        SQLiteDatabase database = databaseHelper.getReadableDatabase();
+
+
+        String where = StepAppOpenHelper.KEY_DAY + " = ?";
+        String [] whereArgs = { date };
+
+        Cursor cursor = database.query(StepAppOpenHelper.TABLE_NAME, null, where, whereArgs, null,
+                null, null );
+        // iterate over returned elements
+        cursor.moveToFirst();
+        for (int index=0; index < cursor.getCount(); index++){
+            steps.add(cursor.getString(0));
+            cursor.moveToNext();
+        }
+        database.close();
+
+        int numSteps = steps.size();
+
+        return numSteps;
+    }
+
 }
 
 
