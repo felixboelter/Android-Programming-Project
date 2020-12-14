@@ -329,7 +329,7 @@ class StepCounterListener<stepsCompleted> implements SensorEventListener {
                 vx = vx + x*interval;
                 vy = vy + x*interval;
                 vz = vz + x*interval;
-                //pace = pace + Math.sqrt(vx*vx + vy*vy + vz*vz); // m/h --> later, we will divide this by 1k
+                pace = pace + Math.sqrt(vx*vx + vy*vy + vz*vz); // m/h --> later, we will divide this by 1k
                 // updating prevTimeStamp for next sample..
                 prevTimeStamp = currentTimeStamp;
 
