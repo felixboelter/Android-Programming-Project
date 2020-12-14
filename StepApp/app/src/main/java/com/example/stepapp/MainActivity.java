@@ -2,6 +2,7 @@ package com.example.stepapp;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.Menu;
@@ -32,6 +33,16 @@ import androidx.appcompat.widget.Toolbar;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    String SETTING_DB_NAME = "SETTING_DB";
+    private SQLiteDatabase settingDB;
+    private StepAppSettingHelper stepAppSettingHelper;
+    boolean settingIsEmpty = false;
+
+    String gender = "female";
+    int age;
+    int weight;
+    int height;
+
 
     private DrawerLayout drawer;
     private NavigationView navigationView;
@@ -67,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
         if (runningQOrLater) {
             getActivity();
         }
+
 
     }
 
