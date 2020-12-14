@@ -1,8 +1,10 @@
 package com.example.stepapp.ui.home;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.hardware.Sensor;
@@ -26,6 +28,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.stepapp.R;
 import com.example.stepapp.StepAppOpenHelper;
+import com.example.stepapp.StepAppSettingHelper;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 
 import java.text.SimpleDateFormat;
@@ -37,11 +40,13 @@ import java.util.TimeZone;
 
 public class HomeFragment extends Fragment {
     public Context context;
+    String SETTING_DB_NAME = "SETTING_DB";
 
     MaterialButtonToggleGroup materialButtonToggleGroup;
 
     // Text view and Progress Bar variables
     public TextView caloriesBurntTextView;
+    public TextView stepsWakedTextView;
     public ProgressBar caloriesBurntProgressBar;
     // ACC sensors.
     private Sensor mSensorACC;
@@ -56,27 +61,68 @@ public class HomeFragment extends Fragment {
 
     public static double caloriesBurnt = 0;
 
+    @SuppressLint("SetTextI18n")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
+        context = getContext();
 
         // Get the number of steps stored in the current date
         Date cDate = new Date();
         String fDate = new SimpleDateFormat("yyyy-MM-dd").format(cDate);
         stepsCompleted = StepAppOpenHelper.loadSingleRecord(getContext(), fDate);
 
-        caloriesBurnt = StepAppOpenHelper.loadCalories(getContext(), fDate);
+        //caloriesBurnt = StepAppOpenHelper.loadCalories(getContext(), fDate);
 
+        // an instance of profile info settingHelperFB
+        StepAppSettingHelper stepAppSettingHelper = new StepAppSettingHelper(getContext(), SETTING_DB_NAME);
+        String gender = "female";
+        int age;
+        int weight;
+        int height;
+        int setFlag = 0;
+        double pace = 4.8f;
+        double met = 2f;
+        SQLiteDatabase mSettingDB = stepAppSettingHelper.getReadableDatabase();
+        Cursor settingCursor = stepAppSettingHelper.getTheTableContent(mSettingDB);
 
-
+        if (settingCursor.moveToFirst()) {
+            gender = settingCursor.getString(settingCursor.getColumnIndex("GENDER"));
+            age = settingCursor.getInt(settingCursor.getColumnIndex("AGE"));
+            weight = settingCursor.getInt(settingCursor.getColumnIndex("WEIGHT"));
+            height = settingCursor.getInt(settingCursor.getColumnIndex("HEIGHT"));
+            setFlag = settingCursor.getInt(settingCursor.getColumnIndex("SET_FLAG"));
+        }else{
+            gender = "";
+            age = 0;
+            weight = 0;
+            height = 0;
+        }
+        double BMR = 0f;
+        if (gender.equals("female") || gender.equals("others")){
+            BMR = 10*weight + 6.25*height - 5*age - 161;
+        }else if (gender.equals("male")){
+            BMR = 10*weight + 6.25*height - 5*age + 5;
+        }
+        met = weight*35./200;
+        caloriesBurnt = BMR*met/24*stepsCompleted/(pace*1000);
+        settingCursor.close();
+        mSettingDB.close();
         // Text view & ProgressBar
         caloriesBurntTextView =  root.findViewById(R.id.caloriesBurnt);
+        stepsWakedTextView =  root.findViewById(R.id.stepsWalked);
+        stepsWakedTextView.setText(Integer.toString(stepsCompleted));
         caloriesBurntProgressBar =  root.findViewById(R.id.progressBar);
         caloriesBurntProgressBar.setMax(1000);
         //Set the Views with the number of stored steps
-        caloriesBurntTextView.setText(String.valueOf((int) caloriesBurnt));
+        if (setFlag == 0 | gender.equals("")){
+            Toast.makeText(getContext(), "Not enough info to calculate!", Toast.LENGTH_SHORT).show();
+            caloriesBurntTextView.setText("0 Calories");
+        }else {
+            caloriesBurntTextView.setText(String.format("%.2f",caloriesBurnt) + " Calories");
+        }
         caloriesBurntProgressBar.setProgress((int) caloriesBurnt);
 
         //  Get an instance of the sensor manager.
@@ -91,7 +137,8 @@ public class HomeFragment extends Fragment {
         SQLiteDatabase database = databaseOpenHelper.getWritableDatabase();
 
         //Instantiate the StepCounterListener
-        listener = new StepCounterListener(database, caloriesBurntTextView, caloriesBurntProgressBar);
+        listener = new StepCounterListener(database, caloriesBurntTextView, stepsWakedTextView ,
+                caloriesBurntProgressBar, context, stepAppSettingHelper);
 
 
 
@@ -158,8 +205,23 @@ class StepCounterListener<stepsCompleted> implements SensorEventListener {
 
     private long lastUpdate = 0;
 
+
+    // these arguments are for accessing the setting DB that contains
+    // the user information
+    SQLiteDatabase settingDB;
+    String gender = "female";
+    int age;
+    int weight;
+    int height;
+    int setFlag = 0;
+    double BMR;
+    double met = 2f; // just a default value, this will be calculated exactly
+    long prevTimeStamp = 0;
+    double pace = 0;
+    Context context;
+
     // ACC Step counter
-   // public int mACCStepCounter = 0;
+    // public int mACCStepCounter = 0;
 
     //Get the number of stored steps for the current day
     public int mACCStepCounter = HomeFragment.stepsCompleted;
@@ -178,6 +240,7 @@ class StepCounterListener<stepsCompleted> implements SensorEventListener {
 
     // TextView and Progress Bar
     TextView stepsCountTextView;
+    TextView calBurnedTextView;
     ProgressBar stepsCountProgressBar;
 
     //
@@ -187,10 +250,40 @@ class StepCounterListener<stepsCompleted> implements SensorEventListener {
     public String hour;
 
     // Get the database, TextView and ProgressBar as args
-    public StepCounterListener(SQLiteDatabase db, TextView tv, ProgressBar pb){
-        stepsCountTextView = tv;
+    public StepCounterListener(SQLiteDatabase db, TextView tv, TextView stepsTV, ProgressBar pb,
+                               Context context, StepAppSettingHelper stepAppSettingHelper){
+        calBurnedTextView = tv;
+        stepsCountTextView = stepsTV;
         stepsCountProgressBar = pb;
         database = db;
+        this.context = context;
+
+
+        // get the user info needed
+        settingDB = stepAppSettingHelper.getReadableDatabase();
+        Cursor settingCursor = stepAppSettingHelper.getTheTableContent(settingDB);
+
+        if (settingCursor.moveToFirst()) {
+            gender = settingCursor.getString(settingCursor.getColumnIndex("GENDER"));
+            age = settingCursor.getInt(settingCursor.getColumnIndex("AGE"));
+            weight = settingCursor.getInt(settingCursor.getColumnIndex("WEIGHT"));
+            height = settingCursor.getInt(settingCursor.getColumnIndex("HEIGHT"));
+            setFlag = settingCursor.getInt(settingCursor.getColumnIndex("SET_FLAG"));
+        }else{
+            gender = "";
+            age = 0;
+            weight = 0;
+            height = 0;
+        }
+        if (gender.equals("female") || gender.equals("others")){
+            BMR = (double) 10*weight + 6.25*height - 5*age - 161;
+        }else if (gender.equals("male")){
+            BMR = (double) 10*weight + 6.25*height - 5*age + 5;
+        }
+        met = weight*35./200;
+
+        settingCursor.close();
+        settingDB.close();
     }
 
     @Override
@@ -214,6 +307,21 @@ class StepCounterListener<stepsCompleted> implements SensorEventListener {
                 SimpleDateFormat jdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
                 jdf.setTimeZone(TimeZone.getTimeZone("GMT+2"));
                 String date = jdf.format(timeInMillis);
+
+
+                //measuring velocity in all 3 directions
+                // Getting current sample timestamp
+                long currentTimeStamp = event.timestamp;
+                // if first sample then interval = 0
+                if(prevTimeStamp == 0)
+                    prevTimeStamp = currentTimeStamp;
+                double NS2Hour = 1e-9/3600;// ((1e-9 s)/1ns)*((1 min)/60s)*((1h)/60min)
+                // calculating interval (in seconds)
+                double interval = (currentTimeStamp - prevTimeStamp) * NS2Hour;
+                // v = a*t + v0 --> last v will be v0 of current v
+                pace = pace + (x + y + z) * interval; // m/h --> later, we will divide this by 1k
+                // updating prevTimeStamp for next sample..
+                prevTimeStamp = currentTimeStamp;
 
                 /*
                 // print a value every 1000 ms
@@ -263,6 +371,7 @@ class StepCounterListener<stepsCompleted> implements SensorEventListener {
     }
 
 
+    @SuppressLint({"DefaultLocale", "SetTextI18n"})
     public void peakDetection() {
         int windowSize = 20;
 
@@ -270,7 +379,7 @@ class StepCounterListener<stepsCompleted> implements SensorEventListener {
          */
         int highestValX = mACCSeries.size(); // get the length of the series
         if (highestValX - lastXPoint < windowSize) { // if the segment is smaller than the processing window skip it
-        return;
+            return;
         }
 
         List<Integer> valuesInWindow = mACCSeries.subList(lastXPoint,highestValX);
@@ -301,11 +410,20 @@ class StepCounterListener<stepsCompleted> implements SensorEventListener {
 
                     // Update the number of steps
                     mACCStepCounter += 1;
-                 //   Log.d("ACC STEPS: ", String.valueOf(mACCStepCounter));
+                    // Log.d("ACC STEPS: ", String.valueOf(mACCStepCounter));
 
                     // Update the TextView and the ProgressBar
                     stepsCountTextView.setText(String.valueOf(mACCStepCounter));
                     stepsCountProgressBar.setProgress(mACCStepCounter);
+
+                    // update calories burned
+                    double calories_burned = BMR*met/24*mACCStepCounter/(pace*1000);
+                    if (setFlag == 0 | gender.equals("")){
+                        Toast.makeText(context, "Not enough info to calculate!", Toast.LENGTH_SHORT).show();
+                        calBurnedTextView.setText("0 Calories");
+                    }else {
+                        calBurnedTextView.setText(String.format("%.2f",calories_burned) + " Calories");
+                    }
 
                     //Insert the data in the database
                     ContentValues values = new ContentValues();
@@ -316,8 +434,8 @@ class StepCounterListener<stepsCompleted> implements SensorEventListener {
                 }
 
             }
-            }
         }
+    }
 
 
     // Calculate the number of steps from the step detector
@@ -328,5 +446,9 @@ class StepCounterListener<stepsCompleted> implements SensorEventListener {
         Log.d("NUM STEPS ANDROID", "Num.steps: " + String.valueOf(mAndroidStepCounter));
     }
 
+
+
 }
+
+
 
