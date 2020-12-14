@@ -329,7 +329,7 @@ class StepCounterListener<stepsCompleted> implements SensorEventListener {
                 vx = vx + x*interval;
                 vy = vy + x*interval;
                 vz = vz + x*interval;
-                pace = pace + Math.sqrt(vx*vx + vy*vy + vz*vz); // m/h --> later, we will divide this by 1k
+                //pace = pace + Math.sqrt(vx*vx + vy*vy + vz*vz); // m/h --> later, we will divide this by 1k
                 // updating prevTimeStamp for next sample..
                 prevTimeStamp = currentTimeStamp;
 
@@ -429,7 +429,7 @@ class StepCounterListener<stepsCompleted> implements SensorEventListener {
 
 
                     // update calories burned
-                    double calories_burned = BMR*met/24*mACCStepCounter/(averageV*1000);
+                    double calories_burned = BMR*met/24*mACCStepCounter/(pace*1000);
                     if (setFlag == 0 | gender.equals("")){
                         Toast.makeText(context, "Not enough info to calculate!", Toast.LENGTH_SHORT).show();
                         calBurnedTextView.setText("0 Calories");
