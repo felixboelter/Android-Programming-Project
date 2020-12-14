@@ -26,6 +26,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.example.stepapp.MainActivity;
 import com.example.stepapp.R;
 import com.example.stepapp.StepAppOpenHelper;
 import com.example.stepapp.StepAppSettingHelper;
@@ -73,9 +74,9 @@ public class HomeFragment extends Fragment {
         // Get the number of steps stored in the current date
         Date cDate = new Date();
         String fDate = new SimpleDateFormat("yyyy-MM-dd").format(cDate);
-        //stepsCompleted = StepAppOpenHelper.loadSingleRecord(getContext(), fDate);
+        stepsCompleted = StepAppOpenHelper.loadSingleRecord(getContext(), fDate);
 
-        stepsCompleted = StepAppOpenHelper.getStepsByDate(getContext(), fDate);
+        //stepsCompleted = StepAppOpenHelper.getStepsByDate(getContext(), fDate);
 
         // an instance of profile info settingHelperFB
         StepAppSettingHelper stepAppSettingHelper = new StepAppSettingHelper(getContext(), SETTING_DB_NAME);
@@ -218,7 +219,11 @@ class StepCounterListener<stepsCompleted> implements SensorEventListener {
     double BMR;
     double met = 2f; // just a default value, this will be calculated exactly
     long prevTimeStamp = 0;
-    double pace = 0;
+    double pace = 4.8f;
+    double vx  = 0;
+    double vy  = 0;
+    double vz  = 0;
+    double averageV = 0;
     Context context;
 
     // ACC Step counter
@@ -320,7 +325,11 @@ class StepCounterListener<stepsCompleted> implements SensorEventListener {
                 // calculating interval (in seconds)
                 double interval = (currentTimeStamp - prevTimeStamp) * NS2Hour;
                 // v = a*t + v0 --> last v will be v0 of current v
-                pace = pace + (x + y + z) * interval; // m/h --> later, we will divide this by 1k
+
+                vx = vx + x*interval;
+                vy = vy + x*interval;
+                vz = vz + x*interval;
+                //pace = pace + Math.sqrt(vx*vx + vy*vy + vz*vz); // m/h --> later, we will divide this by 1k
                 // updating prevTimeStamp for next sample..
                 prevTimeStamp = currentTimeStamp;
 
@@ -416,6 +425,8 @@ class StepCounterListener<stepsCompleted> implements SensorEventListener {
                     // Update the TextView and the ProgressBar
                     stepsCountTextView.setText(String.valueOf(mACCStepCounter));
                     stepsCountProgressBar.setProgress(mACCStepCounter);
+                    averageV = averageV + pace/mACCStepCounter;
+
 
                     // update calories burned
                     double calories_burned = BMR*met/24*mACCStepCounter/(pace*1000);
