@@ -429,7 +429,7 @@ class StepCounterListener<stepsCompleted> implements SensorEventListener {
 
 
                     // update calories burned
-                    double calories_burned = BMR*met/24*mACCStepCounter/(pace*1000);
+                    double calories_burned = BMR*met/24*mACCStepCounter/(averageV*1000);
                     if (setFlag == 0 | gender.equals("")){
                         Toast.makeText(context, "Not enough info to calculate!", Toast.LENGTH_SHORT).show();
                         calBurnedTextView.setText("0 Calories");
