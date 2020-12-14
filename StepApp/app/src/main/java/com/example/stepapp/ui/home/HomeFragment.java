@@ -69,6 +69,7 @@ public class HomeFragment extends Fragment {
 
         context = getContext();
 
+
         // Get the number of steps stored in the current date
         Date cDate = new Date();
         String fDate = new SimpleDateFormat("yyyy-MM-dd").format(cDate);
