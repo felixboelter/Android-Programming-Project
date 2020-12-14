@@ -223,7 +223,7 @@ class StepCounterListener<stepsCompleted> implements SensorEventListener {
     double vx  = 0;
     double vy  = 0;
     double vz  = 0;
-    double averageV = 0;
+    double averageV = 4.8f;
     Context context;
 
     // ACC Step counter
