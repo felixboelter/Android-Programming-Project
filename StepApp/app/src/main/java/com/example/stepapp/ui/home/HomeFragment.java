@@ -43,6 +43,7 @@ public class HomeFragment extends Fragment {
     public Context context;
     String SETTING_DB_NAME = "SETTING_DB";
 
+    private SQLiteDatabase database =null;
     MaterialButtonToggleGroup materialButtonToggleGroup;
 
     // Text view and Progress Bar variables
@@ -136,7 +137,7 @@ public class HomeFragment extends Fragment {
 
 
         StepAppOpenHelper databaseOpenHelper = new StepAppOpenHelper(this.getContext());;
-        SQLiteDatabase database = databaseOpenHelper.getWritableDatabase();
+        database = databaseOpenHelper.getWritableDatabase();
 
         //Instantiate the StepCounterListener
         listener = new StepCounterListener(database, caloriesBurntTextView, stepsWakedTextView ,
@@ -196,6 +197,8 @@ public class HomeFragment extends Fragment {
     @Override
     public void onDestroyView (){
         super.onDestroyView();
+        if (database != null)
+            database.close();
         mSensorManager.unregisterListener(listener);
     }
 
