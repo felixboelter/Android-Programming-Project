@@ -21,7 +21,8 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
 
 
 
-
+    private static Double Weight;
+    private static Double Height;
     private static final int DATABASE_VERSION = 4;
     private static final String DATABASE_NAME = "stepapp";
 
@@ -191,7 +192,12 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
         return numSteps;
     }
 
-
+    public static Double getWeight(){
+        return Weight;
+    }
+    public static Double getHeight(){
+        return Height;
+    }
 
     public static Double loadCalories(Context context, String date){
         List<String> steps = new LinkedList<String>();
@@ -200,8 +206,8 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
         StepAppOpenHelper databaseHelper = new StepAppOpenHelper(context);
         SQLiteDatabase database = databaseHelper.getReadableDatabase();
         List<String> profile = StepAppOpenHelper.loadProfile(context);
-        Double weight = Double.parseDouble(profile.get(0).replaceAll("[^0-9]", ""));
-        Double height = Double.parseDouble(profile.get(1).replaceAll("[^0-9]", ""));
+        Weight = Double.parseDouble(profile.get(0).replaceAll("[^0-9]", ""));
+        Height = Double.parseDouble(profile.get(1).replaceAll("[^0-9]", ""));
 
 
 
@@ -222,7 +228,7 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
 
         Double numSteps = (double) steps.size();
 
-        return numSteps * weight* height* calorieConstant;
+        return numSteps * Weight* Height* calorieConstant;
     }
 
     /**
@@ -313,31 +319,6 @@ public class StepAppOpenHelper extends SQLiteOpenHelper {
         // 6. Return the map with hours and number of steps
         return map;
     }
-
-    public static int getStepsByDate(Context context, String date){
-        List<String> steps = new LinkedList<String>();
-        StepAppOpenHelper databaseHelper = new StepAppOpenHelper(context);
-        SQLiteDatabase database = databaseHelper.getReadableDatabase();
-
-
-        String where = StepAppOpenHelper.KEY_DAY + " = ?";
-        String [] whereArgs = { date };
-
-        Cursor cursor = database.query(StepAppOpenHelper.TABLE_NAME, null, where, whereArgs, null,
-                null, null );
-        // iterate over returned elements
-        cursor.moveToFirst();
-        for (int index=0; index < cursor.getCount(); index++){
-            steps.add(cursor.getString(0));
-            cursor.moveToNext();
-        }
-        database.close();
-
-        int numSteps = steps.size();
-
-        return numSteps;
-    }
-
 }
 
 
