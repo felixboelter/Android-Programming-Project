@@ -1,5 +1,6 @@
 package com.example.stepapp.ui.profile;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -67,11 +68,13 @@ public class ProfileFragment extends Fragment {
 
 
 
-    private void setListener(SeekBar seekBar, final TextView textSetter, final SQLiteDatabase db, final String metric, final int index, final String key){
+    private void setListener(SeekBar seekBar, final TextView textSetter, final SQLiteDatabase db,
+                             final String metric, final int index, final String key){
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             private int mProgressAtStartTracking;
             private int progressChanged = 0;
 
+            @SuppressLint("SetTextI18n")
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 // handle progress change
@@ -80,11 +83,13 @@ public class ProfileFragment extends Fragment {
 
             }
 
+            @SuppressLint("SetTextI18n")
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
                 textSetter.setText(Integer.toString(progressChanged)+metric);
             }
 
+            @SuppressLint("SetTextI18n")
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 textSetter.setText(Integer.toString(progressChanged)+ metric);

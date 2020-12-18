@@ -10,84 +10,149 @@
         android:id="@+id/heightBar"
         android:layout_width="287dp"
         android:layout_height="20dp"
-        android:layout_marginStart="104dp"
-        android:layout_marginTop="3dp"
-        android:layout_marginEnd="20dp"
         android:max="250"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/HeightID" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.7"/>
 
     <SeekBar
         android:id="@+id/weightBar"
         android:layout_width="287dp"
         android:layout_height="20dp"
-        android:layout_marginStart="104dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="20dp"
         android:clickable="false"
         android:max="200"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.54"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/weightPlainText" />
-
-    <TextView
-        android:id="@+id/weightPlainText"
-        android:layout_width="88dp"
-        android:layout_height="23dp"
-        android:layout_marginStart="115dp"
-        android:layout_marginTop="180dp"
-        android:layout_marginEnd="88dp"
-        android:background="@null"
-        android:ems="10"
-        android:fontFamily="@font/nunito_semibold"
-        android:text="Weight"
-        app:layout_constraintEnd_toStartOf="@+id/WeightID"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/WeightID"
-        android:layout_width="88dp"
-        android:layout_height="23dp"
-        android:layout_marginTop="173dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="15dp"
-        android:background="@null"
-        android:ems="10"
-        android:fontFamily="@font/nunito_semibold"
-        app:layout_constraintBottom_toTopOf="@+id/weightBar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/weightPlainText"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
 
-    <TextView
-        android:id="@+id/HeightID"
-        android:layout_width="88dp"
-        android:layout_height="23dp"
-        android:layout_marginStart="107dp"
-        android:layout_marginTop="49dp"
-        android:layout_marginEnd="32dp"
-        android:background="@null"
-        android:ems="10"
-        android:fontFamily="@font/nunito_semibold"
+    <LinearLayout
+        android:id="@+id/weightLL"
+        android:layout_width="287dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/heightPlainText"
-        app:layout_constraintTop_toBottomOf="@+id/weightBar" />
-
-    <TextView
-        android:id="@+id/heightPlainText"
-        android:layout_width="69dp"
-        android:layout_height="21dp"
-        android:layout_marginStart="115dp"
-        android:layout_marginTop="51dp"
-        android:background="@null"
-        android:ems="10"
-        android:fontFamily="@font/nunito_semibold"
-        android:text="Height"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/weightBar" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.471">
+
+        <TextView
+            android:id="@+id/weightPlainText"
+            android:layout_width="10dp"
+            android:layout_height="23dp"
+            android:layout_weight="1"
+            android:layout_gravity="center|start"
+            android:background="@null"
+            android:ems="10"
+            android:fontFamily="@font/nunito_semibold"
+            android:gravity=""
+            android:text="Weight" />
+
+        <LinearLayout
+            android:layout_width="105dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/white_bg">
+
+            <TextView
+                android:id="@+id/weightUnitKG"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:text="Kg"
+                android:gravity="center"
+                android:background="@drawable/line_gray_bg"
+                android:layout_margin="2dp"
+                android:padding="2dp"
+                android:textColor="@color/colorGray"
+                android:fontFamily="@font/nunito_semibold" />
+            <TextView
+                android:id="@+id/weightUnitPound"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:text="Pound"
+                android:layout_margin="2dp"
+                android:padding="2dp"
+                android:textColor="@color/colorGray"
+                android:fontFamily="@font/nunito_semibold" />
+        </LinearLayout>
+        <TextView
+            android:id="@+id/WeightID"
+            android:layout_width="40dp"
+            android:layout_height="23dp"
+            android:layout_weight="2"
+            android:layout_gravity="center|end"
+            android:gravity="end"
+            android:fontFamily="@font/nunito_semibold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/heightLL"
+        android:layout_width="287dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.67">
+
+        <TextView
+            android:id="@+id/heightPlainText"
+            android:layout_width="10dp"
+            android:layout_height="23dp"
+            android:layout_weight="1"
+            android:layout_gravity="center|start"
+            android:background="@null"
+            android:ems="10"
+            android:fontFamily="@font/nunito_semibold"
+            android:gravity=""
+            android:text="Height" />
+
+        <LinearLayout
+            android:layout_width="105dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/white_bg">
+
+            <TextView
+                android:id="@+id/heightUnitCM"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:text="Cm"
+                android:gravity="center"
+                android:background="@drawable/line_gray_bg"
+                android:layout_margin="2dp"
+                android:padding="2dp"
+                android:textColor="@color/colorGray"
+                android:fontFamily="@font/nunito_semibold" />
+            <TextView
+                android:id="@+id/heightUnitFeet"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:text="Feet"
+                android:layout_margin="2dp"
+                android:padding="2dp"
+                android:textColor="@color/colorGray"
+                android:fontFamily="@font/nunito_semibold" />
+        </LinearLayout>
+        <TextView
+            android:id="@+id/HeightID"
+            android:layout_width="40dp"
+            android:layout_height="23dp"
+            android:layout_weight="2"
+            android:layout_gravity="center|end"
+            android:gravity="end"
+            android:fontFamily="@font/nunito_semibold" />
+
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
